@@ -12,29 +12,21 @@ addons:
         - libgtest-dev
         - libgflags-dev gcovr
 
-
-jobs:
+matrix:
     include:
-        - stage: build
-          script:
-              # Setup stechec2 with prologin2018
-              # Normal build
-              - git clone https://github.com/prologin/stechec2.git
-              - cd stechec2
-              - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-              - (./waf.py configure --with-games=prologin2018 --verbose) || (cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log)
-              - ./waf.py build
-          after_success:
-              - ./waf.py build --check
-        - # continue
-          script:
-              # Setup stechec2 with prologin2018
-              # ASAN & gcov build
-              - git clone https://github.com/prologin/stechec2.git
-              - cd stechec2
-              - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-              - (./waf.py configure --with-games=prologin2018 --enable-gcov --enable-asan --verbose) || (cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log)
-              - ./waf.py build
-          after_success:
-              - ./waf.py build --check
-              - ./waf.py coverage
+        - name: Normal build
+          env: CONFFLAGS=
+        - name: ASAN & gcov build
+          env: CONFFLAGS=--enable-gcov --enable-asan
+
+script:
+    # Setup stechec2 with prologin2018
+    - git clone https://github.com/prologin/stechec2.git
+    - cd stechec2
+    - git clone https://github.com/prologin/prologin2018.git games/prologin2018
+    - ( ./waf.py configure --with-games=prologin2018 $CONFFLAGS --verbose ) || ( cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log )
+    - ./waf.py build
+    - ./waf.py build --check
+    - ./waf.py coverage
+
+# vim: noai:ts=4:sw=4:et
