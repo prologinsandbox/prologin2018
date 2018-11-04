@@ -1,10 +1,18 @@
 language: cpp
 compiler: gcc
+addons:
+    apt:
+        packages:
+        - build-essential
+        - python-yaml
+        - ruby
+        - libzmq3-dev
+        - libzmqpp-dev
+        - libgtest-dev
+        - libgflags-dev gcovr
 
 # Setup stechec2 with prologin2018
 install:
-    - apt-get install build-essential python-yaml ruby
-    - apt-get install libzmq3-dev libzmqpp-dev libgtest-dev libgflags-dev gcovr
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
