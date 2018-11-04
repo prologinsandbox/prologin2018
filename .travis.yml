@@ -16,7 +16,7 @@ install:
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-    - ./waf.py configure --with-games=prologin2018 --enable-gcov --enable-asan
+    - ./waf.py configure --with-games=prologin2018 --enable-gcov --enable-asan --verbose
 
 script:
     - ./waf.py build
