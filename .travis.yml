@@ -11,11 +11,9 @@ addons:
 matrix:
     include:
         - name: GCC build
-          env: CONFFLAGS=
           compiler: gcc
 
         - name: Clang build
-          env: CONFFLAGS=
           compiler: clang
 
         - name: Coverage build
