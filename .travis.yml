@@ -25,9 +25,7 @@ matrix:
           compiler: clang
 
         - name: MSAN build
-          env:
-              - CONFFLAGS="--enable-msan"
-              - CXX="clang++ -stdlib=libc++ -g -O2 -fno-omit-frame-pointer -fsanitize-memory-track-origins"
+          env: CONFFLAGS="--enable-msan"
           compiler: clang
 
 install:
