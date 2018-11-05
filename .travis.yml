@@ -1,16 +1,19 @@
-dist: trusty
+dist: xenial
 language: cpp
 
 addons:
     apt:
+        sources:
+            - ubuntu-toolchain-r-test
         packages:
-        - build-essential
-        - python-yaml
-        - ruby
-        - libzmq3-dev
-        - libzmqpp-dev
-        - libgtest-dev
-        - libgflags-dev gcovr
+            - g++-6
+            - build-essential
+            - python-yaml
+            - ruby
+            - libzmq3-dev
+            - libzmqpp-dev
+            - libgtest-dev
+            - libgflags-dev gcovr
 
 matrix:
     include:
@@ -23,6 +26,7 @@ matrix:
 
 # Setup stechec2 with prologin2018
 install:
+    - export CXX=g++-6
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
