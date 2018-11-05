@@ -1,4 +1,4 @@
-dist: xenial
+dist: trusty
 language: cpp
 
 addons:
@@ -14,8 +14,6 @@ addons:
 
 matrix:
     include:
-        - name: Normal build
-          env: CONFFLAGS=
         - name: Coverage build
           env: CONFFLAGS="--enable-gcov"
         - name: ASAN build
