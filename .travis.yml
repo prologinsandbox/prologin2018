@@ -3,10 +3,7 @@ language: cpp
 
 addons:
     apt:
-        sources:
-            - ubuntu-toolchain-r-test
         packages:
-            - g++-6
             - build-essential
             - python-yaml
             - ruby
@@ -19,14 +16,16 @@ matrix:
     include:
         - name: Coverage build
           env: CONFFLAGS="--enable-gcov"
+          compiler: gcc
         - name: ASAN build
           env: CONFFLAGS="--enable-asan"
+          compiler: clang
         - name: MSAN build
           env: CONFFLAGS="--enable-msan"
+          compiler: clang
 
 # Setup stechec2 with prologin2018
 install:
-    - export CXX=g++-6
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
