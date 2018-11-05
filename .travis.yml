@@ -15,20 +15,21 @@ addons:
 matrix:
     include:
         - name: Normal build
-          env: SANFLAGS=
+          env: CONFFLAGS=
+        - name: Coverage build
+          env: CONFFLAGS="--enable-gcov"
         - name: ASAN build
-          env: SANFLAGS="--enable-asan"
+          env: CONFFLAGS="--enable-asan"
         - name: MSAN build
-          env: SANFLAGS="--enable-msan"
-
+          env: CONFFLAGS="--enable-msan"
 
 # Setup stechec2 with prologin2018
 install:
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-    - echo $SANFLAGS
-    - ./waf.py configure --with-games=prologin2018 --enable-gcov $SANFLAGS
+    - echo $CONFFLAGS
+    - ( ./waf.py configure --with-games=prologin2018 $CONFFLAGS ) || ( cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log )
 
 script:
     - ./waf.py build
