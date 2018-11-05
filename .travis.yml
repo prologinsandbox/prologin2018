@@ -3,14 +3,10 @@ language: cpp
 
 addons:
     apt:
+        # stechec2 dependencies
         packages:
-            - build-essential
-            - python-yaml
-            - ruby
-            - libzmq3-dev
-            - libzmqpp-dev
-            - libgtest-dev
-            - libgflags-dev gcovr
+            - build-essential python-yaml ruby
+            - libzmq3-dev libzmqpp-dev libgtest-dev libgflags-dev gcovr
 
 matrix:
     include:
