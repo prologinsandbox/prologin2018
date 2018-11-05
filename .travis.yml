@@ -12,16 +12,25 @@ addons:
         - libgtest-dev
         - libgflags-dev gcovr
 
+matrix:
+    include:
+        - name: Normal build
+          env: SANFLAGS=
+        - name: ASAN build
+          env: SANFLAGS="--enable-asan"
+        - name: MSAN build
+          env: SANFLAGS="--enable-msan"
+
+
 # Setup stechec2 with prologin2018
 install:
     - git clone https://github.com/prologin/stechec2.git
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-    - (./waf.py configure --with-games=prologin2018 --enable-gcov --enable-asan --verbose) || (cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log)
+    - echo $SANFLAGS
+    - ./waf.py configure --with-games=prologin2018 --enable-gcov $SANFLAGS
 
 script:
     - ./waf.py build
-
-after_success:
     - ./waf.py build --check
     - ./waf.py coverage
