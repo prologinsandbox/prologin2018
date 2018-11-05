@@ -3,29 +3,40 @@ language: cpp
 
 addons:
     apt:
-        # stechec2 dependencies
         packages:
-            - build-essential python-yaml ruby
+            # stechec2 dependencies
+            - build-essential python3-yaml ruby
             - libzmq3-dev libzmqpp-dev libgtest-dev libgflags-dev gcovr
 
 matrix:
     include:
+        - name: GCC build
+          env: CONFFLAGS=
+          compiler: gcc
+
+        - name: Clang build
+          env: CONFFLAGS=
+          compiler: clang
+
         - name: Coverage build
           env: CONFFLAGS="--enable-gcov"
           compiler: gcc
+
         - name: ASAN build
           env: CONFFLAGS="--enable-asan"
           compiler: clang
+
         - name: MSAN build
           env: CONFFLAGS="--enable-msan"
           compiler: clang
 
-# Setup stechec2 with prologin2018
 install:
-    - git clone https://github.com/prologin/stechec2.git
+    # Setup stechec2 with prologin2018
+    - git clone https://github.com/prologin/stechec2
     - cd stechec2
-    - git clone https://github.com/prologin/prologin2018.git games/prologin2018
-    - ( ./waf.py configure --with-games=prologin2018 $CONFFLAGS ) || ( cat /home/travis/build/prologinsandbox/prologin2018/stechec2/build/config.log )
+    - git clone https://github.com/prologin/prologin2018 games/prologin2018
+    - ( ./waf.py configure --with-games=prologin2018 $CONFFLAGS ) || \
+      ( cat ./build/config.log )
 
 script:
     - ./waf.py build --check
