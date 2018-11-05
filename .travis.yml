@@ -33,8 +33,7 @@ install:
     - git clone https://github.com/prologin/stechec2
     - cd stechec2
     - git clone https://github.com/prologin/prologin2018 games/prologin2018
-    - ( ./waf.py configure --with-games=prologin2018 $CONFFLAGS ) ||
-      ( cat ./build/config.log )
+    - ./waf.py configure --with-games=prologin2018 $CONFFLAGS || cat ./build/config.log
 
 script:
     - ./waf.py build --check
